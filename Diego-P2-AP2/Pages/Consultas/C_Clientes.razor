@@ -1,0 +1,52 @@
+﻿@page "/C_Clientes"
+@inject IToastService toast
+
+<EditForm Model="Clientes" OnValidSubmit="Buscar">
+    <DataAnnotationsValidator />
+    <div class="container-fluid">
+        <div class="card shadow-lg">
+            <div class="card-header">
+                <h3>Consulta de Clientes</h3>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead class="">
+                        <tr>
+                            <th>Id:</th>
+                            <th>Nombres:</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-transparent">
+                        @foreach (var item in Clientes)
+                        {
+                            <tr>
+                                <td>@item.ClienteId</td>
+                                <td>@item.Nombres</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer">
+            </div>
+
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    private List<Clientes> Clientes = new List<Clientes>() { };
+
+    protected override void OnInitialized()
+    {
+        Buscar();
+    }
+
+    private void Buscar()
+    {
+        var encontrado = ClientesBLL.GetList();
+        if (encontrado != null)
+            this.Clientes = encontrado;
+    }
+
+}
