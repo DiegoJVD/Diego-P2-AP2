@@ -27,5 +27,28 @@ namespace Diego_P2_AP2.BLL
             }
             return lista;
         }
+
+        public static Clientes Buscar(int id)
+        {
+            Contexto context = new Contexto();
+            Clientes cliente;
+
+            try
+            {
+                cliente = context.Clientes.SingleOrDefault();
+
+            }
+            catch (Exception)
+            {
+                throw;
+
+            }
+            finally
+            {
+                context.Dispose();
+            }
+
+            return cliente;
+        }
     }
 }

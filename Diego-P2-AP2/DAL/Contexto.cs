@@ -10,7 +10,7 @@ namespace Diego_P2_AP2.DAL
     public class Contexto : DbContext
     {
         public DbSet<Ventas> Ventas { get; set; }
-       
+        public DbSet<Cobros> Cobros { get; set; }
         public DbSet<Clientes> Clientes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
