@@ -104,7 +104,7 @@ namespace Diego_P2_AP2.BLL
                    .Include(x => x.Detalle)
                    .ThenInclude(x => x.Venta)
                    .Include(x => x.CobroId == id)
-                    .SingleOrDefault();
+                    .FirstOrDefault();
 
             }
             catch (Exception)

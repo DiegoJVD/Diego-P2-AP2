@@ -70,7 +70,7 @@ namespace Diego_P2_AP2.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    CobroId = table.Column<int>(type: "INTEGER", nullable: true),
+                    CobroId = table.Column<int>(type: "INTEGER", nullable: false),
                     VentaId = table.Column<int>(type: "INTEGER", nullable: false),
                     Cobrado = table.Column<decimal>(type: "TEXT", nullable: false)
                 },
@@ -82,7 +82,7 @@ namespace Diego_P2_AP2.Migrations
                         column: x => x.CobroId,
                         principalTable: "Cobros",
                         principalColumn: "CobroId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_CobrosDetalle_Ventas_VentaId",
                         column: x => x.VentaId,

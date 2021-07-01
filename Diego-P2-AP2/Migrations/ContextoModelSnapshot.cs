@@ -81,7 +81,7 @@ namespace Diego_P2_AP2.Migrations
                     b.Property<decimal>("Cobrado")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("CobroId")
+                    b.Property<int>("CobroId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("VentaId")
@@ -186,7 +186,9 @@ namespace Diego_P2_AP2.Migrations
                 {
                     b.HasOne("Diego_P2_AP2.Models.Cobros", "Cobro")
                         .WithMany("Detalle")
-                        .HasForeignKey("CobroId");
+                        .HasForeignKey("CobroId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Diego_P2_AP2.Models.Ventas", "Venta")
                         .WithMany()

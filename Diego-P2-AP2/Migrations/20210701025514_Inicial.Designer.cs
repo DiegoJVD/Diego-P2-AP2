@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Diego_P2_AP2.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20210701015557_Inicial")]
+    [Migration("20210701025514_Inicial")]
     partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -83,7 +83,7 @@ namespace Diego_P2_AP2.Migrations
                     b.Property<decimal>("Cobrado")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("CobroId")
+                    b.Property<int>("CobroId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("VentaId")
@@ -188,7 +188,9 @@ namespace Diego_P2_AP2.Migrations
                 {
                     b.HasOne("Diego_P2_AP2.Models.Cobros", "Cobro")
                         .WithMany("Detalle")
-                        .HasForeignKey("CobroId");
+                        .HasForeignKey("CobroId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Diego_P2_AP2.Models.Ventas", "Venta")
                         .WithMany()

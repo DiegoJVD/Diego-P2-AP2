@@ -32,12 +32,12 @@
                     <div class="form-group">
                         <label>Cliente: </label>
            
-                        <InputSelect class="form-control" @bind-Value="cobro.ClienteId" @onclick="(()=>llenandoDetalle())">
-                           
+                        <select class="form-control" @bind="clienteSeleccionado" @onclick="llenandoDetalle">
+                            <option value="0" disabled selected>Seleccione un cliente</option>
                             @foreach (var cliente in ClientesList)
                             {
                     <option value="@cliente.ClienteId">@cliente.Nombres</option>}
-                        </InputSelect>
+                        </select>
                        
                     </div>
 
@@ -60,29 +60,38 @@
                                     </thead>
                                     <tbody class="text-body">
 
-                                       
+                                    @foreach (var item in cobro.Detalle)
+                                    {
+
                                             <tr>
-                                                <td>.</td>
-                                                <td>.</td>
-                                                <td>.</td>
-                                                <td>.</td>
-                                                <td>.</td>
+                                                <td>@item.VentaId</td>
+                                                <td>@item.Venta.Fecha</td>
+                                                <td>@item.Venta.Monto</td>
+                                                <td>@item.Venta.Balance</td>
+                                                <td>@item.Cobrado</td>
                                                 <td>
                                                     <input class="form-check-input"
                                                            type="checkbox"
-                                                           value=""
                                                            id="flexCheckDefault"
-                                                           style="margin-left:25px" />
+                                                           style="margin-left:25px" 
+                                                           @onchange="eventArgs => {
+                                                    Cobrar(item.Venta, eventArgs.Value); 
+                                                    }"/>
                                                 </td>
                                             </tr>
-                                        
+                                    }
 
                                         </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-                    <label class="form-control">Monto Total:</label>
+                    <div>
+                        <label class="form-control">Total:</label>
+                        <span class="@cobro.Detalle.Count"></span>
+                       
+                    </div>
+                    
                     <div>
                         <label class="form-control">Observaciones:</label>
                         <textarea class="col-lg-12" @bind="cobro.Observaciones"></textarea>
@@ -143,13 +152,26 @@
             cobro.Detalle = CobrosBLL.ObtenerDetalle(clienteSeleccionado);
         }
 
-       
+
+    }
+
+    public void Cobrar(Ventas venta, object valor)
+    {
+        var detalle = cobro.Detalle.Find(d => d.VentaId == venta.VentaId);
+
+        if (detalle != null && (bool)valor)
+            detalle.Cobrado = venta.Balance;
+        else
+            detalle.Cobrado = 0;
     }
 
     public void Guardar()
     {
         bool Guardado;
 
+        cobro.ClienteId = clienteSeleccionado;
+
+        cobro.Detalle.RemoveAll(p => p.Cobrado == 0);
 
         Guardado = CobrosBLL.Guardar(cobro);
 

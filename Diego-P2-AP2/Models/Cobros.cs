@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,7 +12,7 @@ namespace Diego_P2_AP2.Models
         [Key]
         public int CobroId { get; set; }
 
-        public DateTime Fecha { get; set; }
+        public DateTime Fecha { get; set; } = DateTime.Now;
 
         public string Observaciones { get; set; }
 
@@ -21,12 +22,9 @@ namespace Diego_P2_AP2.Models
 
         public decimal TotalCobrado { get; set; }
 
+        [ForeignKey("CobroId")]
         public virtual List<CobrosDetalle> Detalle { get; set; } = new List<CobrosDetalle>();
 
-        public Cobros()
-        {
-            Fecha = DateTime.Now;
-        }
 
     }
 }

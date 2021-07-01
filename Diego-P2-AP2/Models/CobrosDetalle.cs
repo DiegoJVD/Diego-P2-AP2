@@ -14,6 +14,8 @@ namespace Diego_P2_AP2.Models
 
         public Cobros Cobro { get; set; }
 
+        public int CobroId { get; set; }
+
         public Ventas Venta { get; set; }
 
         public int VentaId { get; set; }
