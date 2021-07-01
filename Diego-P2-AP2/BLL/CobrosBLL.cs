@@ -50,8 +50,10 @@ namespace Diego_P2_AP2.BLL
 
             try
             {
-                context.Entry(cobros).State = EntityState.Modified;
-                found = context.SaveChanges() > 0;
+                foreach (var item in cobros.Detalle)
+                    context.Entry(item).State = EntityState.Modified;
+                context.Cobros.Add(cobros);
+                found = (context.SaveChanges() > 0);
 
             }
             catch (Exception)
@@ -77,8 +79,10 @@ namespace Diego_P2_AP2.BLL
 
                 if (cobros != null)
                 {
+                    foreach (var item in cobros.Detalle)
+                        context.Entry(item).State = EntityState.Deleted;
                     context.Cobros.Remove(cobros);
-                    found = context.SaveChanges() > 0;
+                    found = (context.SaveChanges() > 0);
                 }
 
             }
@@ -105,7 +109,7 @@ namespace Diego_P2_AP2.BLL
                 cobros = context.Cobros
                    .Include(x => x.Detalle)
                    .ThenInclude(x => x.Venta)
-                   .Include(x => x.CobroId == id)
+                   .Where(x => x.CobroId == id)
                     .FirstOrDefault();
 
             }
