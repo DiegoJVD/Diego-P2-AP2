@@ -89,11 +89,11 @@
                     <div class="form-check-inline">
                         <div>
                             <label class="form-control">Total:</label>
-                            <span class="@cobro.Detalle.Count"></span>
+                            <span class="@cobro.Detalle.Count()"></span>
 
                         </div>
                         <div>
-                            <label class="form-control">Total Cobrado: @cobro.TotalCobrado</label>
+                            <label class="form-control">Total Cobrado: @Total</label>
 
                         </div>
                     </div>
@@ -107,13 +107,13 @@
 
             <div class="card-footer">
                 <div class="form-group text-center" display: inline-block>
-                    <button type="button" class="btn btn-lg btn-primary">
+                    <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo">
                         <i class="oi oi-file mr-2" />Nuevo
                     </button>
                     <button type="submit" class="btn btn-lg btn-success">
                         <i class="oi oi-account-login" style="transform:rotate(90deg)" /> Guardar
                     </button>
-                    <button type="button" class="btn btn-lg btn-danger">
+                    <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar">
                         <i class="oi oi-trash mr-2" />Eliminar
                     </button>
                 </div>
@@ -130,6 +130,8 @@
     public int clienteSeleccionado { get; set; }
 
     List<Clientes> ClientesList = new List<Clientes>();
+
+    decimal Total = 0;
 
 
 
@@ -159,10 +161,30 @@
 
     }
 
+    public void Eliminar()
+    {
+        bool found;
+
+        found = CobrosBLL.Eliminar(1,cobro);
+
+        if (found)
+        {
+            Nuevo();
+            Toast.ShowSuccess("Se elimino correctamente");
+        }
+        else
+            Toast.ShowError("No se pudo eliminar");
+    }
+
+
     public void Cobrar(Ventas venta, object valor)
     {
         var detalle = cobro.Detalle.Find(d => d.VentaId == venta.VentaId);
         decimal CTotal = 0;
+        decimal semiTotal = 0;
+
+
+
 
         if (detalle != null && (bool)valor)
         {
@@ -180,15 +202,20 @@
 
 
 
+
         foreach (var item in cobro.Detalle)
         {
-            CTotal += VentasBLL.Buscar(item.VentaId).Monto;
-            
+            if (item.Cobrado != 0)
+            {
+                CTotal += VentasBLL.Buscar(item.VentaId).Monto;
+                semiTotal += item.Cobrado;
+            }
+
 
         }
 
-       
 
+        Total = semiTotal;
         cobro.TotalCobrado = CTotal;
 
 

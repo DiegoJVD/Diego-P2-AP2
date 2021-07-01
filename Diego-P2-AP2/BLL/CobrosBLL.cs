@@ -31,7 +31,6 @@ namespace Diego_P2_AP2.BLL
                     item.Venta.Balance = item.Venta.Balance - item.Cobrado;
                     context.Entry(item.Venta).State = EntityState.Modified;
                 }
-                  //  context.Entry(item).State = EntityState.Added;
                 context.Cobros.Add(cobros);
                 found = (context.SaveChanges() > 0);
                
@@ -75,20 +74,24 @@ namespace Diego_P2_AP2.BLL
 
             return found;
         }
-        public static bool Eliminar(int id)
+        public static bool Eliminar(int id, Cobros cobros)
         {
             Contexto context = new Contexto();
             bool found = false;
 
             try
             {
-                var cobros = context.Cobros.Find(id);
+                //var cobros = context.Cobros.Find(id);
 
                 if (cobros != null)
                 {
                     foreach (var item in cobros.Detalle)
-                        context.Entry(item).State = EntityState.Deleted;
-                    context.Cobros.Remove(cobros);
+                    {
+                        item.Venta = context.Ventas.Find(item.VentaId);
+                        item.Venta.Balance += item.Cobrado;
+                        context.Entry(item.Venta).State = EntityState.Modified;
+                    }
+                    context.Entry(cobros).State = EntityState.Deleted;
                     found = (context.SaveChanges() > 0);
                 }
 
