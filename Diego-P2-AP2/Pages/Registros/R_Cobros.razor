@@ -138,18 +138,12 @@
 
     public void llenandoDetalle()
     {
-        List<Ventas> VentaList = VentasBLL.GetList();
-        if (cobro.Detalle == null)
+        if(ClientesBLL.Buscar(clienteSeleccionado) != null)
         {
-            @foreach (var item in VentaList)
-            {
-                if (item.ClienteId == clienteSeleccionado)
-                {
-                    cobro.Detalle.Add(new CobrosDetalle { CobroId = cobro.CobroId, Fecha = item.Fecha, Monto = item.Monto, Balance = item.Balance , Cobrado = 0});
-                    
-                }
-            }
+            
         }
+
+       
     }
 
     public void Guardar()

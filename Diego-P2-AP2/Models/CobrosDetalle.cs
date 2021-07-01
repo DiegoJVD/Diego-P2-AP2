@@ -10,13 +10,13 @@ namespace Diego_P2_AP2.Models
     public class CobrosDetalle
     {
         [Key]
-        public int id { get; set; }
+        public int Id { get; set; }
 
-        public Cobros cobro { get; set; }
+        public Cobros Cobro { get; set; }
 
-        public Ventas venta { get; set; }
+        public Ventas Venta { get; set; }
 
-        public int ventaId { get; set; }
+        public int VentaId { get; set; }
 
         public decimal Cobrado { get; set; }
 

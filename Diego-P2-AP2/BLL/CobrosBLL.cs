@@ -102,7 +102,7 @@ namespace Diego_P2_AP2.BLL
             {
                 cobros = context.Cobros
                    .Include(x => x.Detalle)
-                   .ThenInclude(x => x.venta)
+                   .ThenInclude(x => x.Venta)
                    .Include(x => x.CobroId == id)
                     .SingleOrDefault();
 
@@ -162,6 +162,42 @@ namespace Diego_P2_AP2.BLL
                 context.Dispose();
             }
             return lista;
+        }
+
+        public static List<CobrosDetalle> ObtenerDetalle(int id)
+        {
+            List<Ventas> lista = new List<Ventas>();
+            Contexto contexto = new Contexto();
+            List<CobrosDetalle> detalle = new List<CobrosDetalle>();
+            try
+            {
+                lista = contexto.Ventas
+                    .Include(x => x.Cliente)
+                    .Where(v => v.ClienteId == id && v.Balance > 0)
+                    .ToList();
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                contexto.Dispose();
+            } 
+
+            foreach (var item in lista)
+            {
+                detalle.Add(new CobrosDetalle
+                {
+                    VentaId = item.VentaId,
+                    Venta = item,
+                    Cobrado = 0
+                });
+            }
+                return detalle;
+            
+
         }
 
     }
