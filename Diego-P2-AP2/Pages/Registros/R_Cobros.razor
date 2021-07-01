@@ -72,7 +72,6 @@
                                                 <td>
                                                     <input class="form-check-input"
                                                            type="checkbox"
-                                                           id="flexCheckDefault"
                                                            style="margin-left:25px" 
                                                            @onchange="eventArgs => {
                                                     Cobrar(item.Venta, eventArgs.Value); 
@@ -123,11 +122,8 @@
 
     public int clienteSeleccionado { get; set; }
 
-    Clientes cliente = new Clientes();
-
     List<Clientes> ClientesList = new List<Clientes>();
 
-    List<CobrosDetalle> Detalle = new List<CobrosDetalle>();
 
 
     protected override void OnInitialized()
@@ -170,7 +166,6 @@
         bool Guardado;
 
         cobro.ClienteId = clienteSeleccionado;
-
         cobro.Detalle.RemoveAll(p => p.Cobrado == 0);
 
         Guardado = CobrosBLL.Guardar(cobro);
