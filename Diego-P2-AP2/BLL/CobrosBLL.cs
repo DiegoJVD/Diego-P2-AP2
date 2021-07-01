@@ -96,13 +96,14 @@ namespace Diego_P2_AP2.BLL
         public static Cobros Buscar(int id)
         {
             Contexto context = new Contexto();
-            Cobros cobros;
+            Cobros cobros =new Cobros();
 
             try
             {
                 cobros = context.Cobros
-                   .Include(x => x.Cliente)
                    .Include(x => x.Detalle)
+                   .ThenInclude(x => x.venta)
+                   .Include(x => x.CobroId == id)
                     .SingleOrDefault();
 
             }
@@ -148,8 +149,9 @@ namespace Diego_P2_AP2.BLL
             try
             {
                 lista = context.Cobros
-                   .Include(x => x.Cliente)
                    .Include(x => x.Detalle)
+                   .ThenInclude(x => x.venta)
+                   .Include(x => x.CobroId == id)
                    .ToList();
             }
             catch (Exception)
