@@ -140,7 +140,7 @@
     {
         if(ClientesBLL.Buscar(clienteSeleccionado) != null)
         {
-            
+            cobro.Detalle = CobrosBLL.ObtenerDetalle(clienteSeleccionado);
         }
 
        

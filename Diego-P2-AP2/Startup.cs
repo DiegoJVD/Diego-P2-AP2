@@ -1,5 +1,5 @@
 using Blazored.Toast;
-using Diego_P2_AP2.Data;
+using Diego_P2_AP2;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
@@ -30,7 +30,7 @@ namespace Diego_P2_AP2
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
+            
             services.AddBlazoredToast();
         }
 

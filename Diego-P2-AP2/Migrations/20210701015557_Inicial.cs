@@ -21,6 +21,28 @@ namespace Diego_P2_AP2.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Cobros",
+                columns: table => new
+                {
+                    CobroId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Fecha = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Observaciones = table.Column<string>(type: "TEXT", nullable: true),
+                    ClienteId = table.Column<int>(type: "INTEGER", nullable: false),
+                    TotalCobrado = table.Column<decimal>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cobros", x => x.CobroId);
+                    table.ForeignKey(
+                        name: "FK_Cobros_Clientes_ClienteId",
+                        column: x => x.ClienteId,
+                        principalTable: "Clientes",
+                        principalColumn: "ClienteId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Ventas",
                 columns: table => new
                 {
@@ -39,6 +61,33 @@ namespace Diego_P2_AP2.Migrations
                         column: x => x.ClienteId,
                         principalTable: "Clientes",
                         principalColumn: "ClienteId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CobrosDetalle",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    CobroId = table.Column<int>(type: "INTEGER", nullable: true),
+                    VentaId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Cobrado = table.Column<decimal>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CobrosDetalle", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CobrosDetalle_Cobros_CobroId",
+                        column: x => x.CobroId,
+                        principalTable: "Cobros",
+                        principalColumn: "CobroId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_CobrosDetalle_Ventas_VentaId",
+                        column: x => x.VentaId,
+                        principalTable: "Ventas",
+                        principalColumn: "VentaId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -88,6 +137,21 @@ namespace Diego_P2_AP2.Migrations
                 values: new object[] { 6, 1900m, 3, new DateTime(2020, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2900m });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Cobros_ClienteId",
+                table: "Cobros",
+                column: "ClienteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CobrosDetalle_CobroId",
+                table: "CobrosDetalle",
+                column: "CobroId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CobrosDetalle_VentaId",
+                table: "CobrosDetalle",
+                column: "VentaId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Ventas_ClienteId",
                 table: "Ventas",
                 column: "ClienteId");
@@ -95,6 +159,12 @@ namespace Diego_P2_AP2.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "CobrosDetalle");
+
+            migrationBuilder.DropTable(
+                name: "Cobros");
+
             migrationBuilder.DropTable(
                 name: "Ventas");
 

@@ -47,6 +47,55 @@ namespace Diego_P2_AP2.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Diego_P2_AP2.Models.Cobros", b =>
+                {
+                    b.Property<int>("CobroId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ClienteId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Observaciones")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("TotalCobrado")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("CobroId");
+
+                    b.HasIndex("ClienteId");
+
+                    b.ToTable("Cobros");
+                });
+
+            modelBuilder.Entity("Diego_P2_AP2.Models.CobrosDetalle", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("Cobrado")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("CobroId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("VentaId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CobroId");
+
+                    b.HasIndex("VentaId");
+
+                    b.ToTable("CobrosDetalle");
+                });
+
             modelBuilder.Entity("Diego_P2_AP2.Models.Ventas", b =>
                 {
                     b.Property<int>("VentaId")
@@ -122,15 +171,55 @@ namespace Diego_P2_AP2.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Diego_P2_AP2.Models.Ventas", b =>
+            modelBuilder.Entity("Diego_P2_AP2.Models.Cobros", b =>
                 {
                     b.HasOne("Diego_P2_AP2.Models.Clientes", "Cliente")
-                        .WithMany()
+                        .WithMany("Cobro")
                         .HasForeignKey("ClienteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Cliente");
+                });
+
+            modelBuilder.Entity("Diego_P2_AP2.Models.CobrosDetalle", b =>
+                {
+                    b.HasOne("Diego_P2_AP2.Models.Cobros", "Cobro")
+                        .WithMany("Detalle")
+                        .HasForeignKey("CobroId");
+
+                    b.HasOne("Diego_P2_AP2.Models.Ventas", "Venta")
+                        .WithMany()
+                        .HasForeignKey("VentaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cobro");
+
+                    b.Navigation("Venta");
+                });
+
+            modelBuilder.Entity("Diego_P2_AP2.Models.Ventas", b =>
+                {
+                    b.HasOne("Diego_P2_AP2.Models.Clientes", "Cliente")
+                        .WithMany("Venta")
+                        .HasForeignKey("ClienteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cliente");
+                });
+
+            modelBuilder.Entity("Diego_P2_AP2.Models.Clientes", b =>
+                {
+                    b.Navigation("Cobro");
+
+                    b.Navigation("Venta");
+                });
+
+            modelBuilder.Entity("Diego_P2_AP2.Models.Cobros", b =>
+                {
+                    b.Navigation("Detalle");
                 });
 #pragma warning restore 612, 618
         }
