@@ -1,0 +1,58 @@
+﻿@page "/C_Cobros"
+@inject IToastService toast
+
+<EditForm Model="Cobros" OnValidSubmit="Buscar">
+    <DataAnnotationsValidator />
+    <div class="container-fluid">
+        <div class="card shadow-lg">
+            <div class="card-header">
+                <h3>Consulta de Cobros</h3>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead class="">
+                        <tr>
+                            <th>Id:</th>
+                            <th>Fecha:</th>
+                            <th>ClienteId:</th>
+                            <th>TotalCobrado:</th>
+                            <th>Obervaciones:</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-transparent">
+                        @foreach (var item in Cobros)
+                        {
+                            <tr>
+                                <td>@item.CobroId</td>
+                                <td>@item.Fecha</td>
+                                <td>@item.ClienteId</td>
+                                <td>@item.TotalCobrado</td>
+                                <td>@item.Observaciones</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer">
+            </div>
+
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    private List<Cobros> Cobros = new List<Cobros>() { };
+
+    protected override void OnInitialized()
+    {
+        Buscar();
+    }
+
+    private void Buscar()
+    {
+        var encontrado = CobrosBLL.GetList();
+        if (encontrado != null)
+            this.Cobros = encontrado;
+    }
+
+}
