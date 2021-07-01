@@ -35,7 +35,7 @@ namespace Diego_P2_AP2.BLL
 
             try
             {
-                cliente = context.Clientes.SingleOrDefault();
+                cliente = context.Clientes.Find(id);
 
             }
             catch (Exception)

@@ -10,16 +10,17 @@ namespace Diego_P2_AP2.Models
     {
         public int id { get; set; }
 
+        public DateTime Fecha { get; set; }
+
+        public decimal Monto { get; set; }
+
         public int CobroId { get; set; }
 
-        public Cobros Cobro { get; set; }
+        public decimal Balance { get; set; }
 
         public decimal Cobrado { get; set; }
 
-        public int VentaId { get; set; }
-
-        [ForeignKey("VentaId")]
-        public virtual List<CobrosDetalle> Detalle { get; set; } = new List<CobrosDetalle>();
+        public bool Pago { get; set; }
 
     }
 }
