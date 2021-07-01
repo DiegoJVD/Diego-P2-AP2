@@ -30,5 +30,30 @@ namespace Diego_P2_AP2.BLL
             }
             return lista;
         }
+
+        public static Ventas Buscar(int id)
+        {
+            Contexto context = new Contexto();
+            Ventas ventas;
+
+            try
+            {
+                ventas = context.Ventas.Find(id);
+
+            }
+            catch (Exception)
+            {
+                throw;
+
+            }
+            finally
+            {
+                context.Dispose();
+            }
+
+            return ventas;
+        }
     }
+
+
 }

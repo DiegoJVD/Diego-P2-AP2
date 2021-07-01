@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Diego_P2_AP2.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20210701044007_Inicia")]
-    partial class Inicia
+    [Migration("20210701163215_Inicial")]
+    partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

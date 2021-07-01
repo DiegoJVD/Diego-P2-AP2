@@ -26,9 +26,16 @@ namespace Diego_P2_AP2.BLL
             try
             {
                 foreach (var item in cobros.Detalle)
-                    context.Entry(item).State = EntityState.Added;
+                {
+                    item.Venta = context.Ventas.Find(item.VentaId);
+                    item.Venta.Balance = item.Venta.Balance - item.Cobrado;
+                    context.Entry(item.Venta).State = EntityState.Modified;
+                }
+                  //  context.Entry(item).State = EntityState.Added;
                 context.Cobros.Add(cobros);
                 found = (context.SaveChanges() > 0);
+               
+
 
             }
             catch (Exception)

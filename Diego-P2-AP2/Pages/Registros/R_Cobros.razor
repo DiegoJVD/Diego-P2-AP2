@@ -150,8 +150,9 @@
 
     public void llenandoDetalle()
     {
-        if(ClientesBLL.Buscar(clienteSeleccionado) != null)
+        if (ClientesBLL.Buscar(clienteSeleccionado) != null )
         {
+
             cobro.Detalle = CobrosBLL.ObtenerDetalle(clienteSeleccionado);
         }
 
@@ -166,26 +167,43 @@
         if (detalle != null && (bool)valor)
         {
             detalle.Cobrado = venta.Balance;
+            venta.Balance = 0;
+
         }
         else
         {
+            venta.Balance = detalle.Cobrado;
             detalle.Cobrado = 0;
 
         }
 
 
+
+
         foreach (var item in cobro.Detalle)
-            CTotal += item.Cobrado;
+        {
+            CTotal += VentasBLL.Buscar(item.VentaId).Monto;
+            
+
+        }
+
+       
+
         cobro.TotalCobrado = CTotal;
+
+
 
     }
 
     public void Guardar()
     {
+
         bool Guardado;
 
         cobro.ClienteId = clienteSeleccionado;
         cobro.Detalle.RemoveAll(p => p.Cobrado == 0);
+
+
 
         Guardado = CobrosBLL.Guardar(cobro);
 
@@ -200,7 +218,7 @@
 
     public void Buscar()
     {
-   
+
         var found = CobrosBLL.Buscar(cobro.CobroId);
 
         if (found != null)
@@ -211,6 +229,19 @@
         }
         else
             Toast.ShowError("No se encontro el cobro");
+    }
+
+    public void actualizarVenta()
+    {
+        List<Ventas> lista = VentasBLL.GetList();
+
+        foreach(var item in lista)
+        {
+            if(item.ClienteId == clienteSeleccionado)
+            {
+
+            }
+        }
     }
 
 
