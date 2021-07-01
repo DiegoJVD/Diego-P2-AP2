@@ -226,11 +226,18 @@
     {
 
         bool Guardado;
-
         cobro.ClienteId = clienteSeleccionado;
         cobro.Detalle.RemoveAll(p => p.Cobrado == 0);
 
-
+        if(clienteSeleccionado == 0)
+        {
+            Toast.ShowWarning("Debe seleccionar un cliente");
+            return;
+        }
+        if(cobro.TotalCobrado == 0)
+        {
+            Toast.ShowWarning("No ha cobrado ninguna cuenta pendiente");
+        }
 
         Guardado = CobrosBLL.Guardar(cobro);
 
