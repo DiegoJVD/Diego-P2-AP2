@@ -25,8 +25,10 @@ namespace Diego_P2_AP2.BLL
 
             try
             {
+                foreach (var item in cobros.Detalle)
+                    context.Entry(item).State = EntityState.Added;
                 context.Cobros.Add(cobros);
-                found = context.SaveChanges() > 0;
+                found = (context.SaveChanges() > 0);
 
             }
             catch (Exception)

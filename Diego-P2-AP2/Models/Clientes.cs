@@ -13,10 +13,6 @@ namespace Diego_P2_AP2.Models
         public int ClienteId { get; set; }
         public string Nombres { get; set; }
 
-        [ForeignKey("ClienteId")]
-        public virtual List<Ventas> Venta { get; set; }
-
-        [ForeignKey("ClienteId")]
-        public virtual List<Cobros> Cobro { get; set; }
+       
     }
 }

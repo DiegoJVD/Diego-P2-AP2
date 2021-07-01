@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Diego_P2_AP2.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20210701025514_Inicial")]
-    partial class Inicial
+    [Migration("20210701044007_Inicia")]
+    partial class Inicia
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -176,7 +176,7 @@ namespace Diego_P2_AP2.Migrations
             modelBuilder.Entity("Diego_P2_AP2.Models.Cobros", b =>
                 {
                     b.HasOne("Diego_P2_AP2.Models.Clientes", "Cliente")
-                        .WithMany("Cobro")
+                        .WithMany()
                         .HasForeignKey("ClienteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -206,19 +206,12 @@ namespace Diego_P2_AP2.Migrations
             modelBuilder.Entity("Diego_P2_AP2.Models.Ventas", b =>
                 {
                     b.HasOne("Diego_P2_AP2.Models.Clientes", "Cliente")
-                        .WithMany("Venta")
+                        .WithMany()
                         .HasForeignKey("ClienteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Cliente");
-                });
-
-            modelBuilder.Entity("Diego_P2_AP2.Models.Clientes", b =>
-                {
-                    b.Navigation("Cobro");
-
-                    b.Navigation("Venta");
                 });
 
             modelBuilder.Entity("Diego_P2_AP2.Models.Cobros", b =>
