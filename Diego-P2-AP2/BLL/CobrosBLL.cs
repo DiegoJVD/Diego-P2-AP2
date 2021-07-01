@@ -150,8 +150,7 @@ namespace Diego_P2_AP2.BLL
             {
                 lista = context.Cobros
                    .Include(x => x.Detalle)
-                   .ThenInclude(x => x.venta)
-                   .Include(x => x.CobroId == id)
+                   .Include(x => x.Cliente)
                    .ToList();
             }
             catch (Exception)
