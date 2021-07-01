@@ -19,10 +19,6 @@ namespace Diego_P2_AP2.Models
 
         public Clientes Cliente { get; set; }
 
-        public int VentaId { get; set; }
-
-        public Ventas Venta { get; set; }
-
         public decimal TotalCobrado { get; set; }
 
         public virtual List<CobrosDetalle> Detalle { get; set; } = new List<CobrosDetalle>();

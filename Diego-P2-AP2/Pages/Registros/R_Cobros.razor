@@ -60,10 +60,9 @@
                                     </thead>
                                     <tbody class="text-body">
 
-                                        @foreach (var item in cobro.Detalle)
-                                        {
+                                       
                                             <tr>
-                                                <td>@item.Balance</td>
+                                                <td>.</td>
                                                 <td>.</td>
                                                 <td>.</td>
                                                 <td>.</td>
@@ -76,8 +75,9 @@
                                                            style="margin-left:25px" />
                                                 </td>
                                             </tr>
-                                        }
-                                    </tbody>
+                                        
+
+                                        </tbody>
                                 </table>
                             </div>
                         </div>
@@ -110,35 +110,37 @@
 
 @code
 {
-        private Cobros cobro = new Cobros();
+    private Cobros cobro = new Cobros();
 
-        public int clienteSeleccionado { get; set; }
+    public int clienteSeleccionado { get; set; }
 
-        Clientes cliente = new Clientes();
+    Clientes cliente = new Clientes();
 
-        List<Clientes> ClientesList = new List<Clientes>();
+    List<Clientes> ClientesList = new List<Clientes>();
+
+    List<CobrosDetalle> Detalle = new List<CobrosDetalle>();
 
 
-        protected override void OnInitialized()
+    protected override void OnInitialized()
+    {
+        Nuevo();
+    }
+
+
+    public void Nuevo()
+    {
+        clienteSeleccionado = 0;
+
+        ClientesList = ClientesBLL.GetList();
+        cobro = new Cobros();
+
+    }
+
+    public void llenandoDetalle()
+    {
+        List<Ventas> VentaList = VentasBLL.GetList();
+        if (cobro.Detalle == null)
         {
-            Nuevo();
-        }
-
-
-        public void Nuevo()
-        {
-            clienteSeleccionado = 0;
-
-            ClientesList = ClientesBLL.GetList();
-            cobro = new Cobros();
-
-        }
-
-        public void llenandoDetalle()
-        {
-            List<Ventas> VentaList = VentasBLL.GetList();
-            if (cobro.Detalle == null)
-            {
             @foreach (var item in VentaList)
             {
                 if (item.ClienteId == clienteSeleccionado)
